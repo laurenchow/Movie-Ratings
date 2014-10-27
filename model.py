@@ -31,10 +31,10 @@ class Rating(Base):
     __tablename__="ratings"
 
     id = Column(Integer, primary_key= True)
-    movie_id= Column(Integer, nullable=True)
     user_id = Column(Integer, nullable=True)
-    rating = Column(Integer, nullable=True)
-
+    movie_id= Column(Integer, nullable=True)
+    rating = Column(Integer, nullable=True) 
+    
 # how can you search using sql in python  without running sqlite3? can you?
 def connect():
     global ENGINE

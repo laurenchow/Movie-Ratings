@@ -1,0 +1,15 @@
+<html>
+<head>
+</head>
+
+<body>  
+ 
+    {%for user in users %}
+        <h2> User {{ user.zipcode }}, age {{ user.age }} has {{ user.ratings | length }} ratings </h2>
+ 
+    {%endfor%}
+
+
+</body>
+
+</html>

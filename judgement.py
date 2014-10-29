@@ -83,15 +83,18 @@ def view_all_users():
     user_list = model.session.query(model.User).limit(50).all()
     return render_template("user_list.html", users=user_list)
 
+# we need to figure out how we pass a single user to this
 @app.route('/user')
 def view_single_user():
-    pass
+    return render_template("user.html")
 
 # We should be able to view a list of all users
 # We should be able to click on a user and view the list of movies they've rated, as well as the ratings
 # We should be able to, when logged in and viewing a record for a movie, either add or update a personal rating for that movie.
 
-
+@app.route('movie')
+def view_single_movie():
+    return render_template("movie.html")
 if __name__ == "__main__":
     app.debug = True
     app.run()

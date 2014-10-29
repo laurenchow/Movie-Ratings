@@ -6,7 +6,7 @@
     <h2> <tr><td> User </td><td> Age </td><td> Ratings</td></tr></h2><br>
         
     {%for user in users %}
-        <tr><td> <a href = "/user"> {{ user.id }} </a> </td><td> {{ user.age }} <td></td> {{ user.ratings | length }} ratings </td></tr><br>
+        <tr><td> <a href = "/user/{{ user.id }}"> {{ user.id }} </a> </td><td> {{ user.age }} <td></td> {{ user.ratings | length }} ratings </td></tr><br>
         
  
     {%endfor%}

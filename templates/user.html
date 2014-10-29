@@ -4,9 +4,17 @@
 
 <body>  
 
-    This is working right now.
- 
- 
+    This is working right now.<br>
+    
+    <tr><td> This is what is stored in rating for user {{ user[0].user_id }}
+    </td></tr><br>
+    <br>
+
+    {%for entry in user%}
+    <tr><td> Movie: {{entry.movie.name}} </td></tr><br>
+    <tr><td> Rating: {{ entry.rating }} </td></tr><br>
+    {%endfor%}
+    </tr></td>
 
 </body>
 

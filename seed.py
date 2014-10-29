@@ -23,8 +23,8 @@ def load_movies(session):
         for row in item_table:
             movie_title = row[1].split()
             for i, words in enumerate(movie_title):
-                if words.isalpha() != True:
-                    movie_title.pop(i)
+                if words[-1].isalpha() != True:
+                    movie_title.pop(-1)
                 movie_string = ' '.join(movie_title)
                 movie_string = movie_string.decode("latin-1")
 

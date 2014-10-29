@@ -54,26 +54,11 @@ def connect():
     global ENGINE
     global Session
 
-    # ENGINE = create_engine("sqlite:///ratings.db", echo=True)
-    # Session = sessionmaker(bind=ENGINE)
+    ENGINE = create_engine("sqlite:///ratings.db", echo=True)
+    Session = sessionmaker(bind=ENGINE)
 
-    # return Session()
-
-def get_customer_by_email(email):
-    cursor = connect()
-    query = """SELECT id, email, password, zipcode
-               FROM user
-               WHERE email = ? ;"""
-    cursor.execute(query, (email,))
-
-    row = cursor.fetchone()
-
-    if not row:
-        return None
-
-    user = User(row[0], row[1], row[2], row[3])
-    print user
-
+    return Session()
+ 
 ### End class declarations
 
 def main():

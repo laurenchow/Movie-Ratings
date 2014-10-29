@@ -84,17 +84,29 @@ def view_all_users():
     return render_template("user_list.html", users=user_list)
 
 # we need to figure out how we pass a single user to this
-@app.route('/user')
-def view_single_user():
-    return render_template("user.html")
+@app.route('/user/<int:id>')
+def view_single_user(id):
+    single_user = model.session.query(model.Rating).filter_by(user_id = id).all()
+    print single_user
+    print len(single_user)
+    print "Here's what single_user is  %r" % type(single_user)
+    print "Here's the ID for single_user %r" % single_user[0].id 
+    print "Here's what happens if we unpack single_user"  
+    for item in single_user:
+        print item.id
+        print item.rating
+    return render_template("user.html", user = single_user)
 
 # We should be able to view a list of all users
 # We should be able to click on a user and view the list of movies they've rated, as well as the ratings
 # We should be able to, when logged in and viewing a record for a movie, either add or update a personal rating for that movie.
 
-@app.route('movie')
+@app.route('/movie')
 def view_single_movie():
     return render_template("movie.html")
+
+
+# the list of movies they've rated, as well as the ratings
 if __name__ == "__main__":
     app.debug = True
     app.run()

@@ -29,13 +29,14 @@ def user_signup():
 def signup_user():
     user_email = request.form['email']
     user_password = request.form['password']
-
+    user_age = request.form ['age']
+    user_zipcode = request.form ['zipcode']
     if "login" in session: #this adds users to session
         session["login"][user_email] = user_password 
     else:
         session["login"] = {user_email: user_password}
  
-    new_user = model.User(email = user_email, password = user_password)
+    new_user = model.User(email = user_email, password = user_password, age=user_age, zipcode=user_zipcode)
     model.session.add(new_user)
     model.session.commit() 
  
@@ -77,8 +78,14 @@ def login_user():
         print session
         return redirect("/")
             
+@app.route('/viewallusers')
+def view_all_users(): 
+    user_list = model.session.query(model.User).limit(50).all()
+    return render_template("user_list.html", users=user_list)
 
-
+@app.route('/user')
+def view_single_user():
+    pass
 
 # We should be able to view a list of all users
 # We should be able to click on a user and view the list of movies they've rated, as well as the ratings

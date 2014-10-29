@@ -3,11 +3,15 @@
 </head>
 
 <body>  
- 
+    
+    <h2> <tr><td> User </td><td> Age </td><td> Ratings</td></tr></h2><br>
+        
     {%for user in users %}
-        <h2> User {{ user.id }}, age {{ user.age }} has {{ user.ratings | length }} ratings </h2>
+        <tr><td> {{ user.id }} </td><td> {{ user.age }} <td></td> {{ user.ratings | length }} ratings </td></tr><br>
+        
  
     {%endfor%}
+
 
 
 </body>

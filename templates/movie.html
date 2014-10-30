@@ -1,0 +1,32 @@
+<html>
+<head>
+</head>
+
+<body>  
+
+    This is working right now.<br>
+        
+    <tr><td> This is what is stored in rating for this movie {{ film.name }}
+    </td></tr><br>
+    <br>
+
+    <a href = "/add_rating"> Want to add your own rating? </a> <br>
+
+    <tr><td> Movie: {{ film.name }} </td></tr><br>
+    <tr><td> Movie ID: {{ film.id}} </a> </td></tr><br>
+
+    {%for entry in film.ratings%}
+    <tr><td>UserID: {{ entry.user_id }}</td><td> Rating: {{ entry.rating }} </td></tr><br><br>
+    {%endfor%}
+
+    </tr></td>
+    <br>
+
+    
+   
+
+
+
+</body>
+
+</html>

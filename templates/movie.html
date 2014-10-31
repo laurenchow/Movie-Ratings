@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
 {% block body %}
 
-
-    This is working right now.<br>
+ 
         
     <tr><td> This is what is stored in rating for this movie {{ film.name }}
     </td></tr><br>
     <br>
 
     <a href = "{{ url_for('add_rating', movie_id=film.id) }}"> Want to add your own rating? </a> <br>
+
+    {% if prediction %}
+<h3>We predict you will rate this movie {{prediction}}.</h3>
+{% endif %}
 
     <tr><td> Movie: {{ film.name }} </td></tr><br>
     <tr><td> Movie ID: {{ film.id}} </a> </td></tr><br>

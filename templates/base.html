@@ -7,11 +7,12 @@
         <div class="navbar navbar-inverse navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Movie Ratings</a>
+                  <a class="navbar-brand" href="/"> Movie Ratings</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                     
+                
                         <li><a href="/login">Log In</a></li>
                     </ul>
                 </div>
@@ -29,5 +30,9 @@
             {% endwith %}
             {% block body %}{% endblock %}
         </div>
+        <div class="container">
+        <div class="navbar navbar-bottom"> <img src="/static/popcorn.svg" height = "10px">
+        Image credit: Popcorn by Studio Fibonacci from The Noun Project
+        </div></div>
     </body>
 </html>

@@ -3,18 +3,15 @@
 
  
         
-    <tr><td> This is what is stored in rating for this movie {{ film.name }}
-    </td></tr><br>
+    <tr><td><h2>{{ film.name }}</h2> </td></tr><br>
     <br>
 
-    <a href = "{{ url_for('add_rating', movie_id=film.id) }}"> Want to add your own rating? </a> <br>
 
     {% if prediction %}
 <h3>We predict you will rate this movie {{prediction}}.</h3>
 {% endif %}
-
-    <tr><td> Movie: {{ film.name }} </td></tr><br>
-    <tr><td> Movie ID: {{ film.id}} </a> </td></tr><br>
+    
+    <a href = "{{ url_for('add_rating', movie_id=film.id) }}"> Want to add your own rating? </a> <br><br>
 
     {%for entry in film.ratings%}
     <tr><td>UserID: {{ entry.user_id }}</td><td> Rating: {{ entry.rating }} </td></tr><br><br>

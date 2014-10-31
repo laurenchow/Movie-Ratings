@@ -96,12 +96,18 @@ def logout_user():
     print "This is what session looks like now %r" % session
     return redirect("/login")
   
+  #http://stackoverflow.com/questions/13735024/invalidate-an-old-session-in-flask
 
 @app.route('/viewallusers')
 def view_all_users(): 
     user_list = model.session.query(model.User).limit(50).all()
     return render_template("user_list.html", users=user_list)
 
+
+@app.route('/viewallmovies')
+def view_all_movies(): 
+    movie_list = model.session.query(model.Movie).order_by(model.Movie.name).limit(50).all()
+    return render_template("viewallmovies.html", movies=movie_list)
 
 
 @app.route('/user/<int:id>')

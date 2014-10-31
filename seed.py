@@ -17,7 +17,6 @@ def load_users(session):
     print user_table 
 
 def load_movies(session):
-    # use u.item
     with open('seed_data/u.item', 'rb') as csvfile:
         item_table= csv.reader(csvfile, delimiter='|')
         for row in item_table:

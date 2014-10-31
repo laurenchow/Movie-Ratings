@@ -12,8 +12,9 @@ app.jinja_env.undefined = jinja2.StrictUndefined
 
 @app.route('/')
 def index():
+    print session
 
-    return "Welcome to my flashy movie ratings app. Would you like to log in?"
+    return render_template("index.html")
 
     # user_list = model.session.query(model.User).limit(5).all()
     # return render_template("user_list.html", users=user_list)
@@ -31,6 +32,11 @@ def user_signup():
 def signup_user():
     user_email = request.form['email']
     user_password = request.form['password']
+    
+    new_user = model.User(email = user_email, password = user_password)
+    model.session.add(new_user)
+    model.session.commit() 
+
     current_user = model.session.query(model.User).filter_by(email = user_email).first()
     current_user_id = current_user.id
 
@@ -42,10 +48,7 @@ def signup_user():
 
     print session
  
-    new_user = model.User(email = user_email, password = user_password)
-    model.session.add(new_user)
-    model.session.commit() 
- 
+
     return redirect("/")
  
 
@@ -64,25 +67,36 @@ def login_user():
     user_email = request.form['email']
     user_password = request.form['password']
  
-    verify_user = model.session.query(model.User).filter_by(email = user_email).all()
+    current_user = model.session.query(model.User).filter_by(email = user_email).filter_by(password=user_password).first()
 
     #the line below checks to see if a user is already in DB -if not, it sends them to signup page
     #if they are in DB, it checks to see if they're in session -if not, it adds them
-    if verify_user == []:
-        return redirect("/signup")
-        # fix this to have user ID instead of email/pw
-    else: 
-        if "login" in session:
-            session["login"][user_email] = user_password 
-        else:
-            session["login"] = {user_email: user_password}
+    if current_user:
+        current_user_id = current_user.id
+
+        session['user_id'] = current_user.id
+        session['user_email'] = current_user.email
+        # if "login" in session: #this adds users to session
+        #     session["login"][current_user_id] = user_email
+        # else:
+        #     session["login"] = {current_user_id: user_email}
  
         print session
+
         return redirect("/")
+
+    else: 
+        return redirect("/")
+        return redirect("/signup")
+        # fix this to have user ID instead of email/pw
             
 @app.route('/logout')
 def logout_user():
-    pass
+    session.clear()
+    print "This is what session looks like now %r" % session
+    return redirect("/login")
+    # use g in a before_request function to check and see if a user is logged in -- if they are logged in you can save it in g
+    
 
 @app.route('/viewallusers')
 def view_all_users(): 
@@ -108,30 +122,41 @@ def view_single_movie(id):
 
 
 
-@app.route('/add_rating', methods=['GET', 'POST'])
-def show_rating():
+@app.route('/add_rating/<int:movie_id>', methods=['GET', 'POST'])
+def add_rating(movie_id):
     if request.method == "GET":
-        return render_template("add_rating.html")
+        return render_template("add_rating.html", movie_id=movie_id)
     else:
         return add_your_own_rating()
 
 def add_your_own_rating():
     my_own_rating = request.form['my_rating']
+    current_user_id = session.get('user_id') # won't crash if doesn't exist this way
+    movie_to_rate = request.form['movie_id']
+
+    new_movie_rating = model.Rating(user_id = current_user_id, movie_id = movie_to_rate, rating = my_own_rating)
+    model.session.add(new_movie_rating)
+    model.session.commit()
+    # use jquery AJAX here to add on same page
+    # show some things only when logged in
+    
+    # print "Here's what is stored in current_user_id %r" % current_user_id
+  
 
 
-    print "Here's the rating %r" % my_own_rating
-    print "Here's what is in session %r" % session["login"].keys()
-    current_user_email = session["login"].keys() 
+    # print "Here's the rating %r" % my_own_rating
+    # print "Here's what is in session %r" % session["login"].keys()
+    # current_user_email = session["login"].keys() 
     #add in a log out function this way you can clear session and only have one 
     #store user ID in session too as USER id
     #key: login, value is user ID
     #will this work if you have multiple users in session? how to figure out which one is logged in?
-    current_user_email = current_user_email[0].rstrip()    
-    print "Here's the stripped user email %r" % current_user_email
-    current_user = model.session.query(model.User).filter_by(email = current_user_email).one()
-    print "Here's what is stored as current user %r" % current_user
-    print "User ID %r" % current_user.id
-    # print "Here's the user ID %r" % model.session.query(model.User).get(current_user) 
+    # current_user_email = current_user_email[0].rstrip()    
+    # print "Here's the stripped user email %r" % current_user_email
+    # current_user = model.session.query(model.User).filter_by(email = current_user_email).one()
+    # print "Here's what is stored as current user %r" % current_user
+    # print "User ID %r" % current_user.id
+    # # print "Here's the user ID %r" % model.session.query(model.User).get(current_user) 
     return "add rating function working"
 
     # new_rating = model.Rating(current_user)
@@ -146,5 +171,5 @@ if __name__ == "__main__":
     app.run()
 
     #check DB - if they are in DB, they can log in, if they are no in DB, then sign up -or login failed   
-    # use hashing here -- different than hashing or hashmap, use MD5 or SHA1 to store the password in the session
+    # use hashing here different than hashing or hashmap, use MD5 or SHA1 to store the password in the session
     #check database to see if this user record matches what you have in DB

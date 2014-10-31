@@ -1,11 +1,12 @@
- <html>
-<head>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block body %}
+
+
 <form class="form" method="POST">
     <tr><td> Add your own rating: </td></tr>
     <input type="number" name="my_rating"  min="1" max="5" class="form-control" placeholder="Add your own rating" required autofocus />
+    <input type="hidden" name="movie_id" value="{{ movie_id }}" />
     <button type="btn btn-lg btn-primary btn-block" type="submit">Submit rating</button>
 </form>
-</body>
-</html>
+
+{% endblock %}

@@ -1,8 +1,6 @@
-<html>
-<head>
-</head>
+{% extends 'base.html' %}
+{% block body %}
 
-<body>  
 
     This is working right now.<br>
         
@@ -10,7 +8,7 @@
     </td></tr><br>
     <br>
 
-    <a href = "/add_rating"> Want to add your own rating? </a> <br>
+    <a href = "{{ url_for('add_rating', movie_id=film.id) }}"> Want to add your own rating? </a> <br>
 
     <tr><td> Movie: {{ film.name }} </td></tr><br>
     <tr><td> Movie ID: {{ film.id}} </a> </td></tr><br>
@@ -25,8 +23,4 @@
     
    
 
-
-
-</body>
-
-</html>
+{%endblock%}

@@ -1,16 +1,15 @@
-<html>
-<head>
-</head>
-
-<body>  
-    Hello
-
-    {%for user in users%}
-        <h2> User {{ user.id }}, age {{ user.age }} has {{ user.ratings }} ratings </h2>
- 
-    {%endfor%}
+{% extends 'base.html' %}
+{% block body %}
 
 
-</body>
+        Welcome to my fancy movie ratings application. <br><br>
 
-</html>
+        What would you like to do? <br><br>
+
+        <a href = "/viewallmovies"> See all movies. </a> <br>
+        <a href = "/viewallusers"> See all users. </a> <br>
+        <a href = "/movie"> See ratings for a specific movie. </a> <br>
+       <a href = "/add_rating"> Add a new rating for a movie. </a><br>
+
+
+{%endblock%}
